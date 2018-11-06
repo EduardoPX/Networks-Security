@@ -1,13 +1,10 @@
 <?php
-
 $hostname = "localhost";
 $usename = "root";
 $password = "root";
 $dbname = "injection";
 
-
-if($_SERVER['REQUEST_METHOD'] == 'POST')
-{
+if($_SERVER['REQUEST_METHOD'] == 'POST') {
     $conn = mysqli_connect($hostname, $usename, $password, $dbname);
 
     if(mysqli_connect_errno()) { die("Failed to connect to MySQL: " . mysqli_connect_error()); }
@@ -19,19 +16,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
 
     $rows = mysqli_fetch_array($result);
 
-    if($rows)
-    {
-        echo "################################# <br>";
-        echo "########## AUTENTICADO ############ <br>";
-        echo "################################# <br>";
+    if($rows) {
+        header("Location: ./init.html");
     }
 
-    else
-    {
-        echo "Lamentavelmente houve um erro! $db_ID";
-        echo "O Usuario: $db_ID <br> ou a senha";
-        echo "Senha: $db_password <br> sao invalidos";
-
+    else {
+        header("Location: ./erro.html");
     }
 
     mysql_close($conn);

@@ -1,21 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Network security</title>
-    </head>
-    <body>
-        <form action="index.php" method="POST">
 
-            <h2>---Network security---</h2><br>
+<head>
+    <meta charset="UTF-8">
+    <title>Network security</title>
+</head>
 
-            User:<br>
-            <input type="text" name="id"><br><br>
+<body>
+    <header>
+        <h1>Segurança de Redes</h1>
+    </header>
+    <section>
+        <form action="./login.php" method="POST">
+            <label for="id">User: </label>
+            <input type="text" name="id"><br>
 
-            Password:<br>
-            <input type="text" name="password"><br><br>
+            <label for="password">Password: </label>
+            <input type="text" name="password"><br>
 
-            <input type="submit" value="Click Here!">
+            <button type="submit">Entrar</button>
         </form>
-    </body>
+    </section>
+</body>
 </html>
