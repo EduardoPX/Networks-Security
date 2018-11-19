@@ -1,30 +1,41 @@
 <?php
-$hostname = "localhost";
-$usename = "root";
-$password = "root";
-$dbname = "injection";
+    ini_set('display_erros', 1);
+    ini_set('display_startup_erros', 1);
+    ini_set('html_errors', 1);
+    set_error_handler("var_dump");
+    error_reporting(E_ALL);
 
-if($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $conn = mysqli_connect($hostname, $usename, $password, $dbname);
+    require_once "dbconf.php";
+        
+    if($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $nome = $_POST["nome"];
+        $senha = $_POST["senha"];
 
-    if(mysqli_connect_errno()) { die("Failed to connect to MySQL: " . mysqli_connect_error()); }
+        $conn = pg_connect($conString);
+        if($conn) {
+            $query = "SELECT * FROM usuario WHERE nome='$nome' AND senha='$senha'";
 
-    $db_ID = $_POST['id'];
-    $db_password = $_POST['password'];
+            $result = pg_query($conn, $query);
+            
+            pg_close();
 
-    $result = mysqli_query($conn, "select id, password from user where id='$db_ID' and password='$db_password'");
+            $rows = pg_fetch_array($result);
 
-    $rows = mysqli_fetch_array($result);
+            if($rows > 0) {
+                session_start();
+                ob_start();
+                $_SESSION['id'] = $rows['user_id'];
+                $_SESSION['nome'] = $nome;
+                $_SESSION['senha'] = $senha;
+                header("Location: ./inicio.php");
+            }
 
-    if($rows) {
-        header("Location: ./init.html");
+            else {
+                unset($_SESSION['id']);
+                unset($_SESSION['nome']);
+                unset($_SESSION['senha']);
+                header("Location: ./");
+            }
+        }
     }
-
-    else {
-        header("Location: ./erro.html");
-    }
-
-    mysql_close($conn);
-}
-
 ?>

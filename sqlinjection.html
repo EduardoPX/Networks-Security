@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>SQL Injection</title>
+</head>
+
+<body>
+  <header>
+    <h1>SQL Injection</h1>
+  </header>
+
+  <!-- sql injection -->
+  <section>
+    <a href="./sqlinjection.html">SQL Injection</a>
+  </section>
+
+  <!-- xss stored -->
+  <section>
+      <a href="./xssStoredPage.php">XSS Stored</a>
+  </section>
+
+  <section id="sql-injection" class="attack">
+    <form>
+      <label for="name">Digite o nome do usuário</label>
+      <input type="text" placeholder="digite o nome" name="name" onkeyup="showContents(this.value)">
+    </form>
+
+    <div id="sql-injection-content">
+
+    </div>
+  </section>
+
+  <script>
+  
+    function showContents(name) {
+      var xmlhttp = new XMLHttpRequest();
+      xmlhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          document.getElementById("sql-injection-content").innerHTML = this.responseText;
+        }
+      }
+
+      xmlhttp.open("GET", "./sql-injection.php?name=" + name, true);
+      xmlhttp.send();
+    }
+
+  </script>
+</body>
+
+</html>
